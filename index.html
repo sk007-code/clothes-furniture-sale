@@ -7,13 +7,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50">
-    <!-- Previous nav and header code remains the same -->
+    <!-- Navigation and Header Section -->
+    <header class="bg-white shadow">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-800">Clothes Sharing</h1>
+        </div>
+    </header>
 
+    <!-- Main Content Section -->
     <main class="max-w-6xl mx-auto px-4 py-8">
         <div class="mb-8">
             <h1 class="text-3xl font-bold text-gray-800 mb-4">My Available Clothes</h1>
             <p class="text-gray-600 mb-6">Browse through my available clothes - feel free to take what you like!</p>
-            
+
             <!-- Category Filter -->
             <div class="flex flex-wrap gap-2 mb-6" id="categoryFilters">
                 <button 
@@ -34,19 +40,70 @@
         </div>
     </main>
 
+    <!-- Footer Section -->
     <footer class="bg-gray-100 mt-12">
         <div class="max-w-6xl mx-auto px-4 py-8">
             <p class="text-center text-gray-600">Contact me at: your@email.com</p>
         </div>
     </footer>
 
+    <!-- JavaScript Section -->
     <script>
+        const ITEMS_PER_PAGE = 15;
+        let items = []; // Initialize empty items array
+        let currentPage = 1;
+        let currentCategory = 'all';
+
+        // Generate category filters
+        function setupCategoryFilters() {
+            const categories = ['all', ...new Set(items.map(item => item.category))];
+            const filterContainer = document.getElementById('categoryFilters');
+
+            // Clear existing buttons (except 'All')
+            const buttons = filterContainer.querySelectorAll('button:not(:first-child)');
+            buttons.forEach(button => button.remove());
+
+            // Add category buttons
+            categories.forEach(category => {
+                if (category !== 'all') {
+                    const button = document.createElement('button');
+                    button.className = 'px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 active:bg-blue-500 active:text-white';
+                    button.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                    button.onclick = () => filterItems(category);
+                    filterContainer.appendChild(button);
+                }
+            });
+        }
+
+        // Filter items by category
+        function filterItems(category) {
+            currentCategory = category;
+            currentPage = 1;
+            updateActiveFilter(category);
+            displayItems();
+        }
+
+        // Update active filter button
+        function updateActiveFilter(category) {
+            const buttons = document.querySelectorAll('#categoryFilters button');
+            buttons.forEach(button => {
+                if (button.textContent.toLowerCase() === category || 
+                    (category === 'all' && button.textContent === 'All')) {
+                    button.classList.add('bg-blue-500', 'text-white');
+                    button.classList.remove('bg-gray-200');
+                } else {
+                    button.classList.remove('bg-blue-500', 'text-white');
+                    button.classList.add('bg-gray-200');
+                }
+            });
+        }
+
         // Display items with pagination
         function displayItems() {
             const filteredItems = items.filter(item => 
                 currentCategory === 'all' || item.category === currentCategory
             );
-            
+
             const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
             const endIndex = startIndex + ITEMS_PER_PAGE;
             const itemsToShow = filteredItems.slice(startIndex, endIndex);
@@ -55,13 +112,9 @@
             grid.innerHTML = '';
 
             itemsToShow.forEach(item => {
-                const mediaElement = createMediaElement(item.media);
-                
                 grid.innerHTML += `
                     <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                        <div class="relative w-full h-64">
-                            ${mediaElement}
-                        </div>
+                        <img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover"/>
                         <div class="p-4">
                             <h2 class="text-xl font-semibold text-gray-800">${item.title}</h2>
                             <p class="text-gray-600 mt-2">Size: ${item.size}</p>
@@ -81,31 +134,71 @@
             updatePagination(filteredItems.length);
         }
 
-        // Create media element based on type
-        function createMediaElement(media) {
-            if (media.type === 'video') {
-                return `
-                    <video 
-                        class="w-full h-full object-cover" 
-                        controls 
-                        poster="${media.thumbnailUrl}"
+        // Update pagination controls
+        function updatePagination(totalItems) {
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+            const paginationContainer = document.getElementById('pagination');
+            paginationContainer.innerHTML = '';
+
+            if (totalPages <= 1) return;
+
+            // Previous button
+            paginationContainer.innerHTML += `
+                <button 
+                    onclick="changePage(${currentPage - 1})"
+                    class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}"
+                    ${currentPage === 1 ? 'disabled' : ''}
+                >
+                    Previous
+                </button>
+            `;
+
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                paginationContainer.innerHTML += `
+                    <button 
+                        onclick="changePage(${i})"
+                        class="px-4 py-2 rounded ${currentPage === i ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'}"
                     >
-                        <source src="${media.url}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                        ${i}
+                    </button>
                 `;
-            } else {
-                return `
-                    <img 
-                        src="${media.url}" 
-                        alt="Item photo" 
-                        class="w-full h-full object-cover"
-                    />
-                `;
+            }
+
+            // Next button
+            paginationContainer.innerHTML += `
+                <button 
+                    onclick="changePage(${currentPage + 1})"
+                    class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}"
+                    ${currentPage === totalPages ? 'disabled' : ''}
+                >
+                    Next
+                </button>
+            `;
+        }
+
+        // Change page
+        function changePage(page) {
+            const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                displayItems();
             }
         }
 
-        // Rest of the JavaScript code remains the same...
+        // Fetch data from clothes.json
+        fetch('clothes.json')
+            .then(response => response.json())
+            .then(data => {
+                items = data.items; // Update the items array
+                setupCategoryFilters();
+                displayItems();
+            })
+            .catch(error => console.error('Error loading items:', error));
+
+        // Initialize the page
+        setupCategoryFilters();
+        displayItems();
     </script>
 </body>
 </html>
