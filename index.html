@@ -17,8 +17,8 @@
     <!-- Main Content Section -->
     <main class="max-w-6xl mx-auto px-4 py-8">
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-800 mb-4">Move Out Sale</h1>
-            <p class="text-gray-600 mb-6">Clothes, Furniture, and Paintings Sale - everything must go by Jan 31st!</p>
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Digital Move-out Sale</h1>
+            <p class="text-gray-600 mb-6">Clothes, Furniture, and Paintings Sale - everything must go by Feb 15th!</p>
 
             <!-- Category Filter -->
             <div class="flex flex-wrap gap-2 mb-6" id="categoryFilters">
@@ -101,7 +101,7 @@
         // Display items with pagination
         function displayItems() {
             const filteredItems = items.filter(item => 
-                currentCategory === 'all' || item.category === currentCategory
+                currentCategory === 'all' || item.category.toLowerCase() === currentCategory.toLowerCase()
             );
 
             const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -112,20 +112,29 @@
             grid.innerHTML = '';
 
             itemsToShow.forEach(item => {
+                let mediaContent = '';
+                if (item.media.type === 'image') {
+                    mediaContent = `<img src="${item.media.url}" alt="${item.title}" class="w-full h-64 object-cover"/>`;
+                } else if (item.media.type === 'video') {
+                    mediaContent = `
+                        <video class="w-full h-64 object-cover" controls poster="${item.media.thumbnailUrl}">
+                            <source src="${item.media.url}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    `;
+                }
+
                 grid.innerHTML += `
                     <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                        <img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover"/>
+                        ${mediaContent}
                         <div class="p-4">
                             <h2 class="text-xl font-semibold text-gray-800">${item.title}</h2>
-                            <p class="text-gray-600 mt-2">Size: ${item.size}</p>
                             <p class="text-gray-600 mt-1">Condition: ${item.condition}</p>
                             <p class="text-gray-600 mt-2">${item.description}</p>
-                            <div class="mt-4">
-                                <p class="text-green-600 font-semibold">${item.price}</p>
-                                <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">
-                                    Contact for Details
-                                </button>
-                            </div>
+                            <p class="text-green-600 font-semibold mt-2">${item.price}</p>
+                            <button class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">
+                                Contact for Details
+                            </button>
                         </div>
                     </div>
                 `;
