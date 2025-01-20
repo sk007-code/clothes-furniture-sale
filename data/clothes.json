@@ -1,0 +1,92 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "title": "Faux Suede Futon Convertible",
+      "category": "furniture",
+      "condition": "Like New",
+      "description": "Mainstays Faux suede Futon that converts to bed. Cushions could be included in the price or not based on the preference. Open to negotiation. ",
+      "price": "$80",
+      "media": {
+        "type": "video",
+        "url": "/clothes-furniture-sale/videos/couch.mp4",
+        "thumbnailUrl": "/clothes-furniture-sale/videos/couch-thumb.jpg"
+      },
+      "dateAdded": "2025-01-20",
+      "status": "available"
+    },
+    {
+      "id": "2",
+      "title": "Nathan James Piper Faux Marble Modern Contemporary Accent Side or Coffee Table for Living Room with Metal Frame, White/Black",
+      "category": "furniture",
+      "condition": "Like New",
+      "description": "20\"D x 39\"W x 17\"H\nThis rectangle white living room table is the perfect center piece to add sophistication and elegance to the room.\nAbby is a sturdy coffee table thanks to a durable criss-cross construction with a gunmetal finish. Abby's metal leg frame showcases industrial lines to complement the luxurious aspect of the marble table top.\nThis coffee table is the perfect small space statement piece and has plenty of room to display books, your favorite flower bouquet, and decorative accessories.\nThe marble table is a functional 40 inch long modern piece perfect to display all of the beverage and snacks to entertain all your guests.\nEasy 20-minute assembly.\n\nBase: Steel\nFrame Material: Metal",
+      "price": "$25",
+      "media": {
+        "type": "video",
+        "url": "/clothes-furniture-sale/videos/coffetable.mp4",
+        "thumbnailUrl": "/clothes-furniture-sale/videos/coffetable-thumb.jpg"
+      },
+      "dateAdded": "2025-01-20",
+      "status": "available"
+    },
+    {
+      "id": "3",
+      "title": "Black Side Table",
+      "category": "furniture",
+      "condition": "Gently Used",
+      "description": "Small Side Table for bedside.",
+      "price": "$10",
+      "media": {
+        "type": "video",
+        "url": "/clothes-furniture-sale/videos/IMG_5840.MOV",
+        "thumbnailUrl": "/clothes-furniture-sale/videos/IMG_5840-thumb.jpg"
+      },
+      "dateAdded": "2025-01-20",
+      "status": "available"
+    },
+    {
+      "id": "4",
+      "title": "Oropeza TV Stand for TVs up to 65\" by Laurel Foundry Modern Farmhouse®",
+      "category": "furniture",
+      "condition": "Like New",
+      "description": "Color: Grey Wash\n58'' W X 15.75'' D X 24'' H\nhttps://www.wayfair.com/furniture/pdp/oropeza-58-2-door-tv-stand-for-tvs-up-to-65-w008048473.html?csnid=C1002039-1020-4F3F-B02D-5ECA5D0FFC9A&_emr=0b032bb4-cb22-4b9d-89d2-e8017d727e4d&_eml=fbc76a2b-c416-41c8-a99a-a8b1f251f8ef&refid=EML_47475&source=graymatter",
+      "price": "$150",
+      "media": {
+        "type": "image",
+        "url": "/clothes-furniture-sale/images/IMG_5854.HEIC",
+        "thumbnailUrl": "/clothes-furniture-sale/images/IMG_5854-thumb.jpg"
+      },
+      "dateAdded": "2025-01-20",
+      "status": "available"
+    },
+    {
+      "id": "5",
+      "title": "MCombo Accent Recliner Chair with Ottoman",
+      "category": "Tops",
+      "condition": "New",
+      "description": "Dark Blue.\nSize 49\"D x 29.6\"W x 39.4\"H\nhttps://a.co/d/bj7BQpH",
+      "price": "$150",
+      "media": {
+        "type": "image",
+        "url": "/clothes-furniture-sale/images/IMG_5859.HEIC",
+        "thumbnailUrl": "/clothes-furniture-sale/images/IMG_5859-thumb.jpg"
+      },
+      "dateAdded": "2025-01-20",
+      "status": "available"
+    }
+  ],
+  "metadata": {
+    "lastUpdated": "2025-01-20T00:20:14.213Z",
+    "totalItems": 5,
+    "categories": [
+      "furniture",
+      "Tops"
+    ],
+    "siteInfo": {
+      "contactEmail": "sknancydrew@gmail.com",
+      "location": "Port Imperial, NJ",
+      "pickupInstructions": "Message on the email, and pick up from Port Imperial."
+    }
+  }
+}

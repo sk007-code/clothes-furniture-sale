@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clothes Sharing</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+    <!-- Previous nav and header code remains the same -->
+
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">My Available Clothes</h1>
+            <p class="text-gray-600 mb-6">Browse through my available clothes - feel free to take what you like!</p>
+            
+            <!-- Category Filter -->
+            <div class="flex flex-wrap gap-2 mb-6" id="categoryFilters">
+                <button 
+                    class="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 active:bg-blue-500 active:text-white" 
+                    onclick="filterItems('all')"
+                >
+                    All
+                </button>
+            </div>
+        </div>
+
+        <!-- Items Grid -->
+        <div id="itemsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        </div>
+
+        <!-- Pagination -->
+        <div class="mt-8 flex justify-center gap-2" id="pagination">
+        </div>
+    </main>
+
+    <footer class="bg-gray-100 mt-12">
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            <p class="text-center text-gray-600">Contact me at: your@email.com</p>
+        </div>
+    </footer>
+
+    <script>
+        // Display items with pagination
+        function displayItems() {
+            const filteredItems = items.filter(item => 
+                currentCategory === 'all' || item.category === currentCategory
+            );
+            
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            const endIndex = startIndex + ITEMS_PER_PAGE;
+            const itemsToShow = filteredItems.slice(startIndex, endIndex);
+
+            const grid = document.getElementById('itemsGrid');
+            grid.innerHTML = '';
+
+            itemsToShow.forEach(item => {
+                const mediaElement = createMediaElement(item.media);
+                
+                grid.innerHTML += `
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="relative w-full h-64">
+                            ${mediaElement}
+                        </div>
+                        <div class="p-4">
+                            <h2 class="text-xl font-semibold text-gray-800">${item.title}</h2>
+                            <p class="text-gray-600 mt-2">Size: ${item.size}</p>
+                            <p class="text-gray-600 mt-1">Condition: ${item.condition}</p>
+                            <p class="text-gray-600 mt-2">${item.description}</p>
+                            <div class="mt-4">
+                                <p class="text-green-600 font-semibold">${item.price}</p>
+                                <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full">
+                                    Contact for Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            updatePagination(filteredItems.length);
+        }
+
+        // Create media element based on type
+        function createMediaElement(media) {
+            if (media.type === 'video') {
+                return `
+                    <video 
+                        class="w-full h-full object-cover" 
+                        controls 
+                        poster="${media.thumbnailUrl}"
+                    >
+                        <source src="${media.url}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+            } else {
+                return `
+                    <img 
+                        src="${media.url}" 
+                        alt="Item photo" 
+                        class="w-full h-full object-cover"
+                    />
+                `;
+            }
+        }
+
+        // Rest of the JavaScript code remains the same...
+    </script>
+</body>
+</html>
